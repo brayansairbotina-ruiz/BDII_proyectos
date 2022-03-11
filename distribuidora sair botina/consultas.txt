@@ -1,0 +1,41 @@
+
+sair botina ruiz 
+
+1 .llenar base de datos 
+
+punto 2 cosulta 
+
+SELECT `sucursales`.`id_sucursales` AS ID_SUCURSAL,`sucursales`.`nombre_encargado` AS ENCARGADO_SUCURSAL,
+CONCAT_WS( '',"(",`numero_identificacion`,')',' ',`primer_nombre`) AS  NOMBRE_CLIENTE,`paises`.`descripcion` AS PAIS
+	FROM `sucursales`
+	INNER JOIN `clientes` ON `sucursales`.`id_sucursales` = `clientes`.`id_cliente`
+	INNER JOIN `ciudad_sucursales` ON `sucursales`.`id_ciudad_sucursal` = `ciudad_sucursales`.`id_ciudad_sucursal`
+	INNER JOIN `departamentos` ON `ciudad_sucursales`.`id_departamento` = `departamentos`.`id_departamento`
+	INNER JOIN `paises` ON `departamentos`.`id_pais` = `paises`.`id_pais`
+
+punto 3 consulta 
+
+SELECT `clientes`.`id_cliente` AS ID_CLIENTE,
+	`clientes`.`primer_nombre` AS NOMBRE_CLIENTE,
+	COUNT(`sucursales`.`id_sucursales`) AS CANTIDAD_SUCURSAL
+	FROM `clientes`
+	INNER JOIN `sucursales` ON `clientes`.`id_cliente` = `sucursales`.`id_cliente`
+	GROUP BY `clientes`.`id_cliente`
+
+
+punto 4
+
+SELECT `ciudad_sucursales`.`descripcion` AS CIUDAD, `departamentos`.`departamento`,`paises`.`descripcion`, 
+COUNT(`sucursales`.`id_sucursales`) AS CANTIDAD_SUCURSALES
+FROM `ciudad_sucursales`
+INNER JOIN `departamentos` ON `ciudad_sucursales`.`id_departamento`=`departamentos`.`id_departamento`
+INNER JOIN `paises` ON `paises`.`id_pais`= `departamentos`.`id_pais`
+LEFT JOIN `sucursales` ON `sucursales`.`id_ciudad_sucursal` = `ciudad_sucursales`.`id_ciudad_sucursal`
+GROUP BY `ciudad_sucursales`.`id_ciudad_sucursal`
+	
+
+
+
+
+
+	
